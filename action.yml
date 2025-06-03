@@ -9,7 +9,7 @@ runs:
   steps:
     - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
     - id: attest
-      uses: actions/attest-build-provenance@v2
+      uses: actions/attest-build-provenance@db473fddc028af60658334401dc6fa3ffd8669fd # 2.3.0
       with:
         subject-path: 'artifact/dist/*'
     - run: gh release upload ${{ github.event.release.tag_name }} ${{ steps.attest.outputs.bundle-path }}
