@@ -8,9 +8,11 @@ runs:
   using: composite
   steps:
     - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+    - id: attest
+      uses: actions/attest-build-provenance@v2
       with:
-        name: prerelease
-    - uses: actions/attest-build-provenance@v2
-      with:
-        subject-path: 'dist/*'
-        push-to-registry: true
+        subject-path: 'artifact/dist/*'
+    - run: gh release upload ${{ github.event.release.tag_name }} ${{ steps.attest.outputs.bundle-path }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      shell: bash
